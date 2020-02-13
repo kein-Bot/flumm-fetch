@@ -17,7 +17,7 @@ const readdata = (res, mode, data = "") => new Promise((resolve, reject) => res
 export default (a, options = {}, link = url.parse(a), body = "") => new Promise((resolve, reject) => {
   options = {...{ hostname: link.hostname, path: link.path, method: "GET" }, ...options};
   if(options.method === "POST") {
-    body = querystring.stringify(options.body);
+    body = typeof options.body === "object" ? querystring.stringify(options.body) : options.body;
     delete options.body;
     options.headers = {...options.headers, ...{
       "Content-Type":   "application/x-www-form-urlencoded",
